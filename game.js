@@ -1,4 +1,4 @@
-  require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys', 'frozen/Sprite'], function(GameCore, ResourceManager, keys, Sprite){
+require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys', 'frozen/Sprite'], function(GameCore, ResourceManager, keys, Sprite){
 
   var x = 0;
   var y = 0;
@@ -19,7 +19,7 @@
   var bullet = rm.loadImage('images/bullet.png')
   var enemy = rm.loadImage('images/enemy.png')
   
- var game = new GameCore({
+  var game = new GameCore({
     canvasId: 'canvas',
     resourceManager: rm,
     draw: function(context){

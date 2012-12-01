@@ -1,3 +1,5 @@
+//by Alisa, Jay, Regi
+
 //load the AMD modules we need
 require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys'], function(GameCore, ResourceManager, keys){
 
@@ -17,6 +19,9 @@ require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys'], function(Gam
   var backImg = rm.loadImage('images/gardenbackground.png');
   var rachelalucard = rm.loadImage('images/rachelalucard.png');
   var fireball = rm.loadImage('images/FireBall.png')
+  
+  // Set up sounds
+  var pewSound = rm.loadSound('sound/pew.wav'); //buffer
 
   //setup a GameCore instance
   var game = new GameCore({
@@ -33,7 +38,7 @@ require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys'], function(Gam
       //tells the input manager to listen for key events
       this.inputManager.addKeyAction(keys.LEFT_ARROW);
       this.inputManager.addKeyAction(keys.RIGHT_ARROW);
-      this.inputManager.addKeyAction(keys.SPACE);
+      this.inputManager.addKeyAction(keys.SPACE, true);
       this.inputManager.addKeyAction(keys.UP_ARROW)
     },
     update: function(millis){
@@ -50,10 +55,12 @@ require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys'], function(Gam
       if(this.inputManager.keyActions[keys.UP_ARROW].isPressed() && y>0){
         y=y-3;
       }
-      if(this.inputManager.keyActions[keys.SPACE].isPressed()){
+      if(this.inputManager.keyActions[keys.SPACE].getAmount()){
         fireballActive = true;
         fireballx = x+(rachelalucard.width / 2);
         firebally = y+(rachelalucard.height / 2);
+        var soundSource = rm.playSound(pewSound);
+        // soundSource.noteOff(); //stop playback
       }
       if (fireballActive === true){
         fireballx+= fireballSpeed;

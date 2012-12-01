@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link href='style.css' media='screen' rel='stylesheet' type='text/css'>
-    <script type="text/javascript" src="Box2dWeb-2.1.a.3.js"></script>
-    <script type="text/javascript" src='main.js'></script>
-    <!--<script type="text/javascript" src='camera.js'></script>-->
+    <meta charset="utf-8">
+    <title>Image Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="../../dist/frozen.js"></script>
+    <script src="game.js"></script>
+    <style>
+      body {
+        -webkit-transform: translateZ(0);
+      }
+    </style>
   </head>
-  <body onload="init();">
-     <canvas id="canvas" width="600" height="400" style="background-color:#333333;" ></canvas>
+  <body>
+    <div id="container">
+      <canvas id="canvas" width="1000" height="700" ></canvas>
+    </div>
   </body>
-  <!--<script type="text/javascript">
-    alert('hello');
-  </script>-->
 </html>

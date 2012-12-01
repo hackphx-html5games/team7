@@ -5,14 +5,13 @@
   var serenityx = 300;
   var serenityy = 300;
   var serenityspeed = 2.5;
-  var bulletx = 300;
-  var bullety = 300;
   var bulletSpeed = 4;
   var enemyx = 0;
   var enemyy = 0;
   var enemySpeed = 0;
+  var enemyAttackArray = 0;
+  var enemyAttack = [];
   var bulletArray = [];
-  var enemyArray = [];
 
 
   //setup a ResourceManager to use in the game
@@ -21,6 +20,7 @@
   var serenity = rm.loadImage('images/serenity.png');
   var bullet = rm.loadImage('images/bullet.png')
   var enemy = rm.loadImage('images/nyan.png')
+  var enemyAttack = rm.loadImage('images/')
   
  var game = new GameCore({
     canvasId: 'canvas',

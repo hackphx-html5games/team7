@@ -5,14 +5,13 @@ require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys', 'frozen/Sprit
   var serenityx = 300;
   var serenityy = 300;
   var serenityspeed = 2.5;
-  var bulletx = 300;
-  var bullety = 300;
   var bulletSpeed = 4;
   var enemyx = 0;
   var enemyy = 0;
   var enemySpeed = 0;
+  var enemyAttackArray = 0;
+  var enemyAttack = [];
   var bulletArray = [];
-  var enemyArray = [];
 
 
   //setup a ResourceManager to use in the game
@@ -31,9 +30,9 @@ require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys', 'frozen/Sprit
       bulletArray.forEach (function(bulletObj){
         context.drawImage(bullet, bulletObj.x, bulletObj.y);
       });
-      enemyArray.forEach (function(enemyObj){
-        context.drawImage(enemy, enemyObj.x, enemyObj.y);
-      });
+      // enemyArray.forEach (function(enemyObj){
+      //   context.drawImage(enemy, enemyObj.x, enemyObj.y);
+      // });
     },
     initInput: function(){
       //tells the input manager to listen for key events
@@ -76,9 +75,9 @@ require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys', 'frozen/Sprit
         }
       });
       var enemyObj = new Sprite({x:enemyx,y:enemyy,w:enemy.width, h:enemy.height, dx:Math.random(enemySpeed), dy:Math.random(enemySpeed)});
-      enemyArray.forEach (function(enemyArray){
-        enemyObj.y = Math.random(enemyObj.y) + enemySpeed;
-      });
+      // enemyArray.forEach (function(enemyArray){
+      //   enemyObj.y = Math.random(enemyObj.y) + enemySpeed;
+      // });
    }
   });
 

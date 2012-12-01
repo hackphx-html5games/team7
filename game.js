@@ -1,26 +1,25 @@
-require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys', 'frozen/Sprite'], function(GameCore, ResourceManager, keys, Sprite){
+//load the AMD modules we need
+require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys'], function(GameCore, ResourceManager, keys){
 
-  var x = 0;
+  var x = 50;
   var y = 0;
-  var serenityx = 300;
-  var serenityy = 300;
-  var serenityspeed = 2.5;
-  var bulletSpeed = 4;
-  var enemyx = 0;
-  var enemyy = 0;
-  var enemySpeed = 0;
-  var enemyAttackArray = 0;
-  var enemyAttack = [];
-  var bulletArray = [];
-
+  var speed = 8;
+  var backImgx = 0;
+  var fireballSpeed = 7;
+  var fireballx = 145;
+  var firebally = 0;
+  var fireballActive = false;
+  var backgroundx = 0;  // WB
+  var backgroundy = 0;  // WB
 
   //setup a ResourceManager to use in the game
   var rm = new ResourceManager();
-  var backImg = rm.loadImage('images/space2.jpg');
-  var serenity = rm.loadImage('images/serenity.png');
-  var bullet = rm.loadImage('images/bullet.png')
-  var enemy = rm.loadImage('images/bullet.png')
-  
+  var backImg = rm.loadImage('images/gardenbackground.png');
+  var rachelalucard = rm.loadImage('images/rachelalucard.png');
+  var fireball = rm.loadImage('images/FireBall.png')
+
+  //setup a GameCore instance
+
   var game = new GameCore({
     canvasId: 'canvas',
     resourceManager: rm,

@@ -159,13 +159,13 @@ require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys', 'frozen/Sprit
                     bulletObj.destroy = true;
                     attackObj.destroy = true;
                 }
-                if (collides(serenity, attackObj)===true){
-                  var kaboomObj = new Sprite({x:serenityObj.x,y:serenityObj.y, w:kaboom.width, h: kaboom.height, dx:0, dy:0});
-                  kaboomArray.push(kaboomObj);
-                  kaboomObj.countdown=1000;
-                  scoreAmt--;
-                  serenity.destroy = true;
-                }
+                // if (collides(serenity, attackObj)===true){
+                //   var kaboomObj = new Sprite({x:serenityObj.x,y:serenityObj.y, w:kaboom.width, h: kaboom.height, dx:0, dy:0});
+                //   kaboomArray.push(kaboomObj);
+                //   kaboomObj.countdown=1000;
+                //   scoreAmt--;
+                //   serenity.destroy = true;
+                // }
             });
         });
         

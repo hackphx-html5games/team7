@@ -152,9 +152,9 @@ require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys', 'frozen/Sprit
             attackArray.forEach (function(attackObj){
                 
                 if (collides(bulletObj,attackObj)===true){
-                    var kaboomObj = new Sprite({x:bulletObj.x,y:bulletObj.y, w:kaboom.width, h: kaboom.height, dx:0, dy:0});
+                    var kaboomObj = new Sprite({x:bulletObj.x - kaboom.width / 2, y:bulletObj.y - kaboom.height / 2, w:kaboom.width, h: kaboom.height, dx:0, dy:0});
                     kaboomArray.push(kaboomObj);
-                    kaboomObj.countdown=1000;
+                    kaboomObj.countdown=500;
                     scoreAmt++;
                     bulletObj.destroy = true;
                     attackObj.destroy = true;
@@ -174,7 +174,7 @@ require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys', 'frozen/Sprit
         });
       
         attackArray = attackArray.filter (function(attackObj){
-          if (attackObj.y > this.height){
+          if (attackObj.y > this.height || attackObj.destroy === true){
             return false;
           }
           else{

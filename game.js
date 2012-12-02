@@ -1,13 +1,13 @@
 // Code: Alisa
-// Assets: Regi
-// Sound code, git wrangling: Jay
+// Code, Git wrangling: Jay
+// Sounds, Eye Candy: Regi
 
 require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys', 'frozen/Sprite'], function(GameCore, ResourceManager, keys, Sprite){
 
-  var x = 0;
-  var y = 0;
+  var imgx = 0;
+  var imgy = 0;
   var serenityx = 300;
-  var serenityy = 300;
+  var serenityy = 500;
   var serenityspeed = 3.5;
   var bulletSpeed = 4;
   var enemyx = 300;
@@ -23,12 +23,14 @@ require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys', 'frozen/Sprit
   var starty = 0;
   var scorex = 0;
   var scorey = 0;
+  var scoreAmt = 0;
   
-  var intersectSprite = function (bulletObj, attackObj) {
-    var distance_squared = Math.pow((bulletObj.x + (bulletObj.w/2)) - (attackObj.x + (attackObj.w/2)),2) + Math.pow((bulletObj.y + (bulletObj.h/2)) - (attackObj.y + (attackObj.h/2)),2);
-    var radii_squared = Math.pow(bulletObj.collisionRadius + attackObj.collisionRadius,2);
-    return distance_squared < radii_squared;  // true if intersect
-  };
+  function collides(a, b) {
+    return a.x < b.x + b.w &&
+          a.x + a.w > b.x &&
+          a.y < b.y + b.h &&
+          a.y + a.h > b.y;
+  }
   var scoreAmt = 0;
   
   //setup a ResourceManager to use in the game
@@ -72,7 +74,7 @@ require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys', 'frozen/Sprit
         context.drawImage(start,startx,starty);
       }
       else{
-        context.drawImage(backImg,x,y);
+        context.drawImage(backImg, imgx, imgy);
         context.drawImage(serenity, serenityx, serenityy);
         context.drawImage(enemy, enemyx, enemyy);
         context.drawImage(score, scorex, scorey);
@@ -83,8 +85,11 @@ require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys', 'frozen/Sprit
           context.drawImage(attack, attackObj.x, attackObj.y);
         });
         kaboomArray.forEach(function(kaboomObj){
-          context.drawImage(kaboom, attackObj.x, attackObj.y);
+          context.drawImage(kaboom, kaboomObj.x, kaboomObj.y);
         });
+        context.strokeStyle = "#FDAD3A"
+        context.font = "48px herculean";
+        context.fillText(scoreAmt, 150, 50);
       }
     },
     initInput: function(){
@@ -134,16 +139,38 @@ require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys', 'frozen/Sprit
         });
       
         bulletArray = bulletArray.filter (function(bulletObj){
-          if (bulletObj.y < 0){
-            return false;
-          }
-          else{
-            return true;
-          }
+            if (bulletObj.y < 0 || bulletObj.destroy){
+                return false;
+            }
+            else{
+                return true;
+            }
         });
       
+        bulletArray.forEach (function(bulletObj){
+            bulletObj.y = bulletObj.y - bulletSpeed;
+            attackArray.forEach (function(attackObj){
+                
+                if (collides(bulletObj,attackObj)===true){
+                    var kaboomObj = new Sprite({x:bulletObj.x,y:bulletObj.y, w:kaboom.width, h: kaboom.height, dx:0, dy:0});
+                    kaboomArray.push(kaboomObj);
+                    kaboomObj.countdown=1000;
+                    scoreAmt++;
+                    bulletObj.destroy = true;
+                    attackObj.destroy = true;
+                }
+                if (collides(serenity, attackObj)===true){
+                  var kaboomObj = new Sprite({x:serenityObj.x,y:serenityObj.y, w:kaboom.width, h: kaboom.height, dx:0, dy:0});
+                  kaboomArray.push(kaboomObj);
+                  kaboomObj.countdown=1000;
+                  scoreAmt--;
+                  serenity.destroy = true;
+                }
+            });
+        });
+        
         attackArray.forEach (function(attackObj){
-          attackObj.y = attackObj.y + attackSpeed;
+            attackObj.y = attackObj.y + attackSpeed;
         });
       
         attackArray = attackArray.filter (function(attackObj){
@@ -154,12 +181,27 @@ require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys', 'frozen/Sprit
             return true;
           }
         }, this);
+        
+        kaboomArray.forEach (function(kaboomObj){
+            if (kaboomObj.countdown>0){
+                kaboomObj.countdown-=millis;
+            }
+        });
+
+        kaboomArray = kaboomArray.filter (function(kaboomObj){
+            if (kaboomObj.countdown <= 0){
+                return false;
+            }
+            else{
+                return true;
+            }
+        });
       
         // --------------------------------------------------------
         // Input.
         // --------------------------------------------------------
       
-        if(this.inputManager.keyActions[keys.ENTER].isPressed() && gamestart != true){
+        if(this.inputManager.keyActions[keys.ENTER].isPressed()){
           gamestart = true;
         }
         if(this.inputManager.keyActions[keys.LEFT_ARROW].isPressed() && serenityx > 0){
@@ -186,21 +228,6 @@ require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys', 'frozen/Sprit
             timeSinceShot = 0;
           }
         }
-        
-        // --------------------------------------------------------
-        // Collisions.
-        // --------------------------------------------------------
-        
-        bulletArray.forEach (function(bulletObj){
-          bulletObj.y = bulletObj.y - bulletSpeed;
-          attackArray.forEach (function(attackObj){
-           if (intersectSprite(bulletObj,attackObj)===true){
-              kaboomx = bulletObj.x;
-              kaboomy = bulletObj.y;
-              scoreAmt++;
-            }
-          });
-        });
       
       }
       

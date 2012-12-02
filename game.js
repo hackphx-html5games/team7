@@ -50,7 +50,7 @@ require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys', 'frozen/Sprit
   var score = rm.loadImage('score.png');
 
   //Sounds.
-  var music = rm.loadSound('music.mp3');
+  var music = rm.loadSound('music.ogg');
   var musicSource = null;
   var pewSound = rm.loadSound('pew.ogg');
   var dyingSound = rm.loadSound('die.ogg');

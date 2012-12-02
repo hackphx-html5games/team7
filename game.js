@@ -103,7 +103,7 @@ require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys', 'frozen/Sprit
       // --------------------------------------------------------
       
       if (!gameStarted) {
-        // musicSource = rm.playSound(music, true); //Loop music.
+        musicSource = rm.playSound(music, true); //Loop music.
         gameStarted = true;
       }
       else if (gameOver) {

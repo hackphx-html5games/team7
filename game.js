@@ -174,7 +174,7 @@ require(['frozen/GameCore', 'frozen/ResourceManager', 'dojo/keys', 'frozen/Sprit
         });
       
         attackArray = attackArray.filter (function(attackObj){
-          if (attackObj.y > this.height || attackObj.destroy === true){
+          if (attackObj.y > 700 || attackObj.destroy === true){
             return false;
           }
           else{
